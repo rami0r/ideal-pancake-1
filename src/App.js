@@ -2,16 +2,20 @@ import './App.css';
 
 import React, {Component} from 'react';
 
-export class App extends Component {
+class App extends Component {
+  state = {
+    name: 'Stheffany'
+  }
+
   render () {
-    const {name} = this.props;
+    const { name } = this.state;
+
     return (
       <div>
-        Hello, world! from {name}
+        Hello, {name}
       </div>
     )
   }
 }
 
-export const AnotherApp = ({name}) =>  <div> Hello, world! from {name}</div>
-
+export default App;
