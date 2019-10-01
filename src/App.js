@@ -1,13 +1,17 @@
 import './App.css';
 
-import React from 'react';
+import React, {Component} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      Hello, world!
-    </div>
-  );
+export class App extends Component {
+  render () {
+    const {name} = this.props;
+    return (
+      <div>
+        Hello, world! from {name}
+      </div>
+    )
+  }
 }
 
-export default App;
+export const AnotherApp = ({name}) =>  <div> Hello, world! from {name}</div>
+
