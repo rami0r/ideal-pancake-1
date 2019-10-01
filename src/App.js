@@ -7,12 +7,19 @@ class App extends Component {
     name: 'Stheffany'
   }
 
+  onChange = event => {
+    const { value } = event.target;
+    this.setState( () => ({
+      name: value
+    }));
+  }
+
   render () {
     const { name } = this.state;
 
     return (
       <div>
-        Hello, {name}
+        <input type="text" value={name} onChange={this.onChange}/>
       </div>
     )
   }
