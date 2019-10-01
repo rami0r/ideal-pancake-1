@@ -22,6 +22,12 @@ class App extends Component {
     }))
   }
 
+  onDelete = value => () => {
+    this.setState(() => ({
+      list: this.state.list.filter(item => item !== value)
+    }))
+  }
+
   render () {
     const { name, list } = this.state;
 
@@ -29,14 +35,14 @@ class App extends Component {
       <div>
         <input type="text" value={name} onChange={this.onChange}/>
         <button type="button" onClick={this.onClick}>Add</button>
-        <List list={list}/>
+        <List list={list} onDelete={this.onDelete}/>
       </div>
     )
   }
 }
 
-const List = ({list}) => {
-  const items = list.map(value => <li key={value}>{value}</li>);
+const List = ({list, onDelete}) => {
+  const items = list.map(value => <li key={value}>{value} <button type="button" onClick={onDelete(value)}>X</button></li>);
   return <ul>{items}</ul>
 }
 
