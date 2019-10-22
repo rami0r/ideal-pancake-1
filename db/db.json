@@ -1,7 +1,12 @@
 {
   "todos": [
     {
+      "id": 0,
       "title":"Create a list"
+    },
+    {
+      "id": 1,
+      "title":"Finish a list"
     }
   ]
 }
