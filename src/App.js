@@ -1,5 +1,7 @@
 import "./App.css";
 
+import * as TodoModel from "./models/TodoModel";
+
 import React, { Component } from "react";
 
 class App extends Component {
@@ -17,22 +19,41 @@ class App extends Component {
   };
 
   onClick = () => {
-    this.setState(() => ({
-      name: "",
-      list: [...this.state.list, this.state.name]
-    }));
+    TodoModel.add(this.state.name)
+      .then(this.updateList)
+      .catch( error => console.error(error));
   };
 
-  onDelete = value => () => {
+  updateList = () => {
+    TodoModel.getTodos()
+      .then(list => this.setList(list))
+      .catch(error => console.error(error));
+
     this.setState(() => ({
-      list: this.state.list.filter(item => item !== value),
-      show: false
-    }));
+      name: ""
+    }))
+  }
+
+  onDelete = id => () => {
+    TodoModel.destroy(id)
+      .then(this.updateList)
+      .catch(error => console.error(error))
   };
 
   componentDidMount() {
+    TodoModel.getTodos()
+      .then(list => this.setList(list))
+      .catch(error => console.error(error));
+
     console.log("Component did mount");
+
   }
+
+  setList = newList => {
+    this.setState(() => ({
+      list: newList
+    }));
+  };
 
   render() {
     const { name, list, show } = this.state;
@@ -49,27 +70,18 @@ class App extends Component {
   }
 }
 
-class List extends Component {
-  componentWillUnmount() {
-    console.log("Unmount");
-  }
+const List = ({ list, onDelete }) => {
 
-  render() {
-    const { list, onDelete } = this.props;
-
-    const items = list.map(value => (
-      <li key={value}>
-        {value}
-        <button type="button" onClick={onDelete(value)}>
+  const items = list.map(value => (
+    (<li key={value.id}>
+        {value.title}
+        <button type="button" onClick={onDelete(value.id)}>
           X
         </button>
-      </li>
-    ));
+    </li>)
+  ));
 
-    return (
-      <ul>{items}</ul>
-    );
-  }
-}
+  return <ul>{items}</ul>;
+};
 
 export default App;
