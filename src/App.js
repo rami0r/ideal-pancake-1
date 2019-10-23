@@ -10,7 +10,6 @@ class App extends Component {
   state = {
     name: "",
     list: [],
-    show: true
   };
 
   onChange = event => {
@@ -46,9 +45,6 @@ class App extends Component {
     TodoModel.getTodos()
       .then(list => this.setList(list))
       .catch(error => console.error(error));
-
-    console.log("Component did mount");
-
   }
 
   setList = newList => {
@@ -61,13 +57,14 @@ class App extends Component {
     const { name, list, show } = this.state;
 
     return (
-      <div>
+      <>
+        <h1>To do list</h1>
         <input type="text" value={name} onChange={this.onChange} />
         <button type="button" onClick={this.onClick}>
           +
         </button>
-        {show && <List list={list} onDelete={this.onDelete} />}
-      </div>
+        <List list={list} onDelete={this.onDelete} />
+      </>
     );
   }
 }
