@@ -1,11 +1,15 @@
-import './App.css';
+import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import React from 'react';
+import Alert from "react-bootstrap/Alert";
+import React from "react";
 
 function App() {
   return (
     <div className="App">
-      Hello, world!
+      <Alert variant="primary">
+        Hello, world!
+      </Alert>
     </div>
   );
 }
