@@ -64,7 +64,7 @@ class App extends Component {
       <div>
         <input type="text" value={name} onChange={this.onChange} />
         <button type="button" onClick={this.onClick}>
-          Add
+          +
         </button>
         {show && <List list={list} onDelete={this.onDelete} />}
       </div>
