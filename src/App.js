@@ -4,6 +4,8 @@ import * as TodoModel from "./models/TodoModel";
 
 import React, { Component } from "react";
 
+import List from "./view/List"
+
 class App extends Component {
   state = {
     name: "",
@@ -69,19 +71,5 @@ class App extends Component {
     );
   }
 }
-
-const List = ({ list, onDelete }) => {
-
-  const items = list.map(value => (
-    (<li key={value.id}>
-        {value.title}
-        <button type="button" onClick={onDelete(value.id)}>
-          X
-        </button>
-    </li>)
-  ));
-
-  return <ul>{items}</ul>;
-};
 
 export default App;
