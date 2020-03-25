@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import Question from './Question';
 import { getPokemons } from '../../models/PokemonModel';
 
 class Quiz extends Component {
@@ -28,11 +29,17 @@ class Quiz extends Component {
     })
   }
 
+  nextQuestion = () => {
+    const { index } = this.state;
+
+    this.setState({
+      index: index + 1
+    })
+  }
+
   render() {
     const { score, questions, index } = this.state;
     const { name } = this.props.location.state;
-
-    const question = questions[index];
 
     return (
       <main className="Page">
@@ -43,25 +50,15 @@ class Quiz extends Component {
           </div>
           {
             questions.length > 0 ? (
-              <div className="Container Game">
-                <div className="Game__Question">
-                  {question.rightAnswer.name}
-                </div>
-                <div className="Game__Options">
-                  {
-                    question.options.map(option =>
-                      <span>
-                        { option }
-                      </span>
-                    )
-                  }
-                </div>
-              </div>
+              <Question
+                question={questions[index]}
+                onClick={this.nextQuestion}
+              />
             ) : (
-                <span>
-                  loading...
-                </span>
-              )
+              <span>
+                loading...
+              </span>
+            )
           }
         </section>
       </main>
