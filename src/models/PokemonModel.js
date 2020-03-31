@@ -38,7 +38,7 @@ const mountRightAnswer = (pokemon, name) => {
     img: isThatPikachu(name) || pokemon.sprites.front_default
   }
 }
-export const isLastIndex = (current, total) => current < total - 1
+export const isLastIndex = (current) => current >= NUMBER_OF_QUESTIONS - 1
 
 const isThatPikachu = name => name === 'pikachu' ? PIKAPERICLES.img : false
 

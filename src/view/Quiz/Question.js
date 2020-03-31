@@ -1,29 +1,70 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Question = ({question, onClick}) => (
-  <div className="Container Game">
-    <div className="Game__Question">
-      <img
-        src={question.rightAnswer.img}
-        alt="question"
-      />
-    </div>
-    <div className="Game__Options">
-      {
-        question.options.map(option =>
-          <span key={option}>
-            {option}
-          </span>
-        )
-      }
-    </div>
-    <button
-      type="button"
-      onClick={onClick}
-    >
-      Next
+class Question extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      answer: ''
+    }
+  }
+
+  onChange = (event) => {
+    const { value } = event.target
+
+    this.setState({ answer: value })
+  }
+
+
+  render() {
+    const { question, onClick, index, confirmQuestion, disableNext, marker} = this.props
+    const { answer } = this.state
+
+    return (
+      <form className="Container Game">
+        <div className="Game__Question">
+          <img
+            src={question.rightAnswer.img}
+            alt="question"
+          />
+        </div>
+        <div className="Game__Options">
+          {
+            question.options.map(option =>
+              <div key={option}>
+                <input
+                  type="radio"
+                  id={option}
+                  className={`Game__Option${option === answer ? marker : ''}`}
+                  value={option}
+                  name={`question${index}`}
+                  checked={option === answer}
+                  onChange={this.onChange}
+                  disabled={!disableNext}
+                />
+                <label htmlFor={option}>
+                  {option}
+                </ label>
+              </div>
+            )
+          }
+        </div>
+        <button
+          onClick={(event) => confirmQuestion(event, answer)}
+          disabled={!Boolean(answer) || !disableNext}
+        >
+          Ok
+        </button>
+        <button
+          type="button"
+          onClick={onClick}
+          disabled={disableNext}
+        >
+          Next
     </button>
-  </div>
-)
+      </form>
+    )
+  }
+}
 
 export default Question;
