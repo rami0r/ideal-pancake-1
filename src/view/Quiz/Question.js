@@ -17,7 +17,15 @@ class Question extends Component {
 
 
   render() {
-    const { question, onClick, index, confirmQuestion, disableNext, marker} = this.props
+    const {
+      question,
+      onClick,
+      index,
+      confirmQuestion,
+      disableNext,
+      marker,
+      next
+    } = this.props
     const { answer } = this.state
 
     return (
@@ -55,13 +63,18 @@ class Question extends Component {
         >
           Ok
         </button>
-        <button
-          type="button"
-          onClick={onClick}
-          disabled={disableNext}
-        >
-          Next
-    </button>
+        {
+          next && (
+            <button
+              type="button"
+              onClick={onClick}
+              disabled={disableNext}
+            >
+              Next
+            </button>
+          )
+        }
+
       </form>
     )
   }

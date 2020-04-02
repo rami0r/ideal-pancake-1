@@ -2,7 +2,14 @@ import * as PokemonService from '../service/PokemonService';
 
 import chunk from 'lodash.chunk';
 
+export const RIGHT_ANSWER = '--right';
+export const WRONG_ANSWER = '--error';
+
 const NUMBER_OF_QUESTIONS = 5;
+
+export const isAnswerRigth = (answer, rightAnswer) => answer === rightAnswer;
+
+export const isThereANextQuestion = (index) => index < NUMBER_OF_QUESTIONS - 1;
 
 export const getPokemons = async () => {
   const pokemons = await PokemonService.get();
@@ -15,7 +22,12 @@ export const getPokemon = async (url) => {
   return pokemon;
 }
 
-const mountQuiz = async results => await Promise.all(separateQuestion(results).map((pokemons) => mountQuestion(pokemons)));
+const mountQuiz = async results =>
+  await Promise.all(
+    separateQuestion(results).map((pokemons) =>
+      mountQuestion(pokemons)
+    )
+  );
 
 const mountQuestion = async pokemons => {
   return {
@@ -30,15 +42,13 @@ const pickAnswer = async pokemons => {
   return mountRightAnswer(pokemon, pokemons[index].name);
 }
 
-const separateQuestion = results => chunk(results, NUMBER_OF_QUESTIONS);
+const separateQuestion = results =>
+  chunk(results, NUMBER_OF_QUESTIONS)
 
-const mountRightAnswer = (pokemon, name) => {
-  return {
-    name: name,
+const mountRightAnswer = (pokemon, name) =>({
+    name,
     img: isThatPikachu(name) || pokemon.sprites.front_default
-  }
-}
-export const isLastIndex = (current) => current >= NUMBER_OF_QUESTIONS - 1
+})
 
 const isThatPikachu = name => name === 'pikachu' ? PIKAPERICLES.img : false
 
